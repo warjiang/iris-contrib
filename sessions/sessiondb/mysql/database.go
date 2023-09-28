@@ -228,7 +228,7 @@ func (db *Database) Clear(sid string) error {
 // Release destroys the session, it clears and removes the session entry,
 // session manager will create a new session ID on the next request after this call.
 func (db *Database) Release(sid string) error {
-	dr := db.getDB(db.GormDB).Delete(&GormSession{
+	dr := db.getDB(db.GormDB).Where(&GormSession{SessionKey: sid}).Delete(&GormSession{
 		SessionKey: sid,
 	})
 	return dr.Error
